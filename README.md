@@ -20,6 +20,7 @@ The *stream processor* in this example is an agent that subscribes to the `strea
 Getting started with these examples requires a complete Kafka environment (with Zookeeper). The [Environment](https://github.com/twosixlabs-dart/kafka-examples-docker) project contains a docker-compose file for setting up everything. As this is a set of Python examples, just stand up the provided Python environment with:
 
 ```shell
+docker-compose -f python.yml pull
 docker-compose -f python.yml up -d
 ```
 
