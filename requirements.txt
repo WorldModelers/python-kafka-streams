@@ -1,0 +1,5 @@
+faust
+pytest
+pytest-asyncio
+pytest-mock
+asynctest

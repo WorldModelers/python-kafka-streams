@@ -1,2 +1,3 @@
 # python-kafka-streams
-Kafka Streams Template - Python
+
+[![Build Status](https://github.com/twosixlabs-dart/python-kafka-streams/workflows/Build/badge.svg)](https://github.com/twosixlabs-dart/python-kafka-streams/actions)
