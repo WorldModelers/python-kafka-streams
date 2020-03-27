@@ -4,7 +4,7 @@
 
 ## What Is This?
 
-This project is a part of a collection of Python examples for working with kafka Streams via the [`Faust`](https://faust.readthedocs.io) library. This particular project contains a simple stream processor implementation. The other projects. The full suite of projects are the following:
+This project is a part of a collection of Python examples for working with kafka Streams via the [`Faust`](https://faust.readthedocs.io) library. This particular project contains a simple stream processor implementation. The full suite of projects are the following:
 
 - [Producer](https://github.com/twosixlabs-dart/python-kafka-producer)
 - [Stream Processor](https://github.com/twosixlabs-dart/python-kafka-streams) (this project)
