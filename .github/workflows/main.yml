@@ -24,6 +24,6 @@ jobs:
     - name: Publish to Registry
       uses: HurricanKai/Publish-Docker-Github-Action@master
       with:
-        name: twosixlabs-dart/python-kafka-streams
+        name: twosixlabsdart/python-kafka-streams
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
