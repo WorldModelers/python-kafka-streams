@@ -1,19 +1,22 @@
 from faust import StreamT
-from pystreams.app import app
-from pystreams.messages.stream_message import StreamMessage
+from pystreams import config
 
 
-# create topics
-stream_in_topic = app.topic('stream.in', value_type=StreamMessage)
-stream_out_topic = app.topic('stream.out', value_type=StreamMessage)
+def create_streams(app):
+    # create topics
+    stream_in_topic = app.topic(config['topic']['from'], key_type=str, value_type=str)
+    stream_out_topic = app.topic(config['topic']['to'], key_type=str, value_type=str)
 
+    # create an agent subscribed to the stream.in topic. this function receives
+    # events, updates them, and then forwards them to the stream.out topic
+    @app.agent(stream_in_topic)
+    async def stream_in(stream: StreamT):
+        """Update and forward events to the stream_out_topic topic"""
+        auto_commit = config['app'].get('enable_auto_commit', False)
+        events = stream.events() if auto_commit else stream.noack().events()
+        async for event in events:
+            event.value['value'].append('python-kafka-streams')
+            await stream_out_topic.send(key=event.key, value=event.value)
+            yield event
 
-# create an agent subscribed to the stream.in topic. this function receives
-# events, updates them, and then forwards them to the stream.out topic
-@app.agent(stream_in_topic)
-async def stream_in(stream: StreamT):
-    """Update and forward events to the stream_out_topic topic"""
-    async for event in stream:
-        event.breadcrumbs.append('python-kafka-streams')
-        await stream_out_topic.send(value=event)
-        yield event
+    return stream_in_topic, stream_out_topic

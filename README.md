@@ -11,25 +11,53 @@ This project is a part of a collection of Python examples for working with kafka
 - [Consumer](https://github.com/twosixlabs-dart/python-kafka-consumer)
 - [Environment](https://github.com/twosixlabs-dart/kafka-examples-docker)
 
-The environment is detailed more [here](#Getting-Started).
-
-The *stream processor* in this example is an agent that subscribes to the `stream.in` topic for events. When it receives an event, it updates the payload and forwards it along to the `stream.out` topic. That is it! This project is relatively simple, and so the structure of the project is simple and may not entirely reflect a complex application/use of `Faust`.
+The *stream processor* in this example is an agent that subscribes to some topic for events. When it receives an event, it updates the payload and forwards it along to another topic. That is it!
 
 ## Getting Started
 
-Getting started with these examples requires a complete Kafka environment (with Zookeeper). The [Environment](https://github.com/twosixlabs-dart/kafka-examples-docker) project contains a docker-compose file for setting up everything. As this is a set of Python examples, just stand up the provided Python environment with:
+Getting started with this example requires a complete Kafka environment. [This project](https://github.com/twosixlabs-dart/kafka-examples-docker) contains a docker-compose file for setting up everything. You can use the configuration inputs to connect to a preexisting infrastructure if you have one already.
+
+If you do not have a Python installation ready, you can configure the input and then build the Dockerfile and run the resulting image with:
 
 ```shell
-docker-compose -f python.yml pull
-docker-compose -f python.yml up -d
+docker build -t python-kafka-streams-local .
+docker run --env PROGRAM_ARGS=wm-sasl-example -it python-kafka-streams-local:latest 
 ```
 
-This will pull down the images needed and begin running everything. You can observe what is going on by looking at the logs for each of the three Python components (either one at a time or in multiple terminals):
 
-```shell
-docker logs -f kafka-examples-docker_stream-processor_1
-docker logs -f kafka-examples-docker_producer
-docker logs -f kafka-examples-docker_consumer
+### Configuration File & SASL/SSL
+
+The code here is configured to use JSON resources found at the subpackage `pystreams.resources.env`. Your configuration must be found within the [pystreams/resources/env](pystreams/resources/env) directory. When specifying your own you may omit the `.json` extension; it will attempt to load it as it and if that fails will attempt to load it assuming a `.json` extension. The default is to point to the [wm-sasl-example](/pystreams/resources/env/wm-sasl-example.json) configuration (which contains mostly nothing). Here is the expected format of the input file:
+
+```json
+{
+    "broker": "",
+    "auth": {
+        "username": "",
+        "password": ""
+    },
+    "app": {
+        "id": "",
+        "auto_offset_reset": "",
+        "enable_auto_commit": false
+    },
+    "topic": {
+        "from": "",
+        "to": ""
+    }
+}
 ```
 
-The stream-processor and producer will only have some startup and debug output, but the consumer will show messages being send through to the consumer's `stdout`, containing breadcrumbs from the producer, then the stream-processor, and finally the consumer itself.
+* `broker` - the hostname + port of the Kafka broker
+* `auth`
+  * `username` - username for SASL authentication
+  * `password` - password for SASL authentication
+* `app`
+  * `id` - unique identifier for your application/group
+  * `auto_offset_reset` - set to either `earliest` or `latest` to determine where a *new* app should start consuming from
+  * `enable_auto_commit` - set to true to commit completed processing records
+* `topic`
+  * `from` - topic to consume from; currently only a single topic may be specified
+  * `to` - topic to publish to; currently only a single topic may be specified
+
+These options are subject to change/refinement, and others may be introduced in the future.

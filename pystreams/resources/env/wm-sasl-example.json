@@ -1,0 +1,16 @@
+{
+    "broker": "CHANGEME",
+    "auth": {
+        "username": "CHANGEME",
+        "password": "CHANGEME"
+    },
+    "app": {
+        "id": "CHANGEME",
+        "auto_offset_reset": "earliest",
+        "enable_auto_commit": false
+    },
+    "topic": {
+        "from": "CHANGEME",
+        "to": "CHANGEME"
+    }
+}
