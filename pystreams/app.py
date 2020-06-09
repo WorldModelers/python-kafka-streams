@@ -9,8 +9,8 @@ app = None
 
 def create_app():
     broker = None
-    if config.get('broker'):
-        broker = f'kafka://{config["broker"]}',
+    if config.get('kafka.bootstrap.servers'):
+        broker = f'kafka://{config["kafka.bootstrap.servers"]}',
 
     broker_credentials = None
     if 'auth' in config:
