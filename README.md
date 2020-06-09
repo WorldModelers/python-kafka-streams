@@ -31,7 +31,7 @@ The code here is configured to use JSON resources found at the subpackage `pystr
 
 ```json
 {
-    "broker": "",
+    "kafka.bootstrap.servers": "",
     "auth": {
         "username": "",
         "password": ""
@@ -48,7 +48,7 @@ The code here is configured to use JSON resources found at the subpackage `pystr
 }
 ```
 
-* `broker` - the hostname + port of the Kafka broker
+* `kafka.bootstrap.servers` - the hostname + port of the Kafka broker
 * `auth`
   * `username` - username for SASL authentication
   * `password` - password for SASL authentication
