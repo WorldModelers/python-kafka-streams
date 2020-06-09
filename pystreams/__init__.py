@@ -10,11 +10,11 @@ except ImportError:
 
 # get the configuration
 config_name = os.environ.get('PROGRAM_ARGS', 'wm-sasl-example.json')
-if not config_loader.is_resource('pyconsumer.resources.env', config_name):
+if not config_loader.is_resource('pystreams.resources.env', config_name):
     if not config_name.endswith('.json'):
         config_name += '.json'
 config = json.loads(
-    config_loader.read_text('pyconsumer.resources.env', config_name)
+    config_loader.read_text('pystreams.resources.env', config_name)
 )
 
 
