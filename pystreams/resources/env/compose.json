@@ -6,7 +6,7 @@
         "enable_auto_commit": false
     },
     "topic": {
-        "from": "stream.out",
-        "to": "stream.in"
+        "from": "stream.in",
+        "to": "stream.out"
     }
 }
