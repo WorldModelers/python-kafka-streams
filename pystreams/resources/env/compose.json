@@ -1,0 +1,12 @@
+{
+    "kafka.bootstrap.servers": "kafka-broker-1:19092",
+    "app": {
+        "id": "streams",
+        "auto_offset_reset": "earliest",
+        "enable_auto_commit": false
+    },
+    "topic": {
+        "from": "stream.out",
+        "to": "stream.in"
+    }
+}
